@@ -1,8 +1,6 @@
 import IsLogin from "components/IsLogin";
-import Membership from "components/Membership";
+import SignUp from "components/SignUp";
 import { useState } from "react";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
 
@@ -15,11 +13,11 @@ export default function Login() {
     <div>
       {isLoginView ? (
         <>
-          <IsLogin onSignUpClick={toggleView}/>
+          <IsLogin onSignUpClick={toggleView} />
         </>
       ) : (
         <>
-          <Membership onSignUpClick={toggleView}/>
+          <SignUp />
 
         </>
       )}
