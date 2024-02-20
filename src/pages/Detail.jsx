@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Avatar from 'components/common/Avatar';
-import { deleteLetter, editLetter } from "../redux/modules/letters";
+import { deleteLetter, editLetter } from "../redux/modules/letterSlice";
 import { useSelector, useDispatch } from 'react-redux';
 
 export default function Detail() {

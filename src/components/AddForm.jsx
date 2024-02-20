@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from "react-redux";
-import { addLetter } from "../redux/modules/letters";
+import { addLetter } from "../redux/modules/letterSlice";
 
 export default function AddForm() {
 
