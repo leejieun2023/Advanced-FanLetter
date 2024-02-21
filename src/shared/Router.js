@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Home from 'pages/Home';
 import Detail from 'pages/Detail';
@@ -14,9 +14,13 @@ function Router() {
       <Route path="/" element={<Home />} />
       <Route path="/detail/:id" element={<Detail />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="*" element={<Navigate replace to="/" />} />
     </>
   ) : (
-    <Route path="*" element={<Login />} />
+    <>
+      <Route path="login" element={<Login />} />
+      <Route path="*" element={<Login />} />
+    </>
   );
 
   return (

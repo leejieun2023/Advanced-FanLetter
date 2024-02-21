@@ -5,6 +5,7 @@ import { login } from "../redux/modules/authSlice";
 import { useMutation } from "react-query";
 import { signIn, signUp } from "api";
 import { toast } from "react-toastify";
+import Button from "components/common/Button";
 import useForm from "hooks/useForm";
 
 export default function Login() {
@@ -47,20 +48,20 @@ export default function Login() {
   });
 
 
-  const handleAuth = async (event) => {
+  const handleAuth = (event) => {
     event.preventDefault();
     if (inLogin) {
       // 로그인 요청
       if (!id || !password) {
         return toast.warn("아이디, 비밀번호를 다시 확인해주세요.");
       }
-      await mutateToLogin({ id, password });
+      mutateToLogin({ id, password });
     } else {
       // 회원가입 요청
       if (!id || !password || !nickname) {
-        return toast.worn("아이디, 비밀번호, 닉네임을 다시 확인해주세요.");
+        return toast.warn("아이디, 비밀번호, 닉네임을 다시 확인해주세요.");
       }
-      await mutateToRegister({ id, password, nickname });
+      mutateToRegister({ id, password, nickname });
     }
   };
 
@@ -75,6 +76,7 @@ export default function Login() {
           maxLength={10}
           onChange={handleInputChange}
           value={id}
+          type="text"
           autoFocus
         />
         <Input
@@ -84,6 +86,7 @@ export default function Login() {
           maxLength={15}
           onChange={handleInputChange}
           value={password}
+          type="password"
         />
         {!inLogin && (
           <Input
@@ -93,12 +96,12 @@ export default function Login() {
             maxLength={10}
             onChange={handleInputChange}
             value={nickname}
+            type="text"
           />
         )}
-        <button
+        <Button
           text={inLogin ? "로그인" : "회원가입"}
           size="large"
-          disabled={inLogin ? !id || !password : !id || !password || !nickname}
         />
         <ToggleMenu>
           <span onClick={() => setInLogin((prev) => !prev)}>
@@ -117,33 +120,29 @@ const Container = styled.div`
   height: 100vh;
   background-color: rgb(206, 232, 255);
 `;
-
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   padding: 12px 18px;
-  border-radius: 12px;
+  border-radius: 10px;
   background-color: #d1f5f6;
   width: 500px;
 `;
-
 const Title = styled.h1`
-  font-size: 36px;
-  margin-bottom: 36px;
+  font-size: 30px;
+  margin-bottom: 40px;
 `;
-
 const Input = styled.input`
-  margin-bottom: 24px;
-  padding: 12px 0;
+  margin-bottom: 25px;
+  padding: 10px;
   border: none;
-  border-bottom: 1px solid gray;
   outline: none;
+  border-radius: 5px;
 `;
-
 const ToggleMenu = styled.div`
   text-align: center;
   font-size: 16px;
-  color: lightgray;
+  color: #c5d0dc;
   margin-top: 24px;
   & span {
     user-select: none;
