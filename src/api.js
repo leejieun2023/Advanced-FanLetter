@@ -5,13 +5,13 @@ export const api = axios.create({
 });
 
 // 회원가입 요청
-export const register = async (id, password, nickname) => {
+export const signUp = async ({id, password, nickname}) => {
     const response = await api.post('/register', { id, password, nickname });
     return response.data;
 };
 
 // 로그인 요청
-export const login = async (id, password) => {
+export const signIn = async ({id, password}) => {
     const response = await api.post('/login', { id, password });
     return response.data;
 };
