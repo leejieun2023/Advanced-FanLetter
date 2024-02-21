@@ -1,25 +1,27 @@
 import styled from "styled-components";
 import { register } from "../api";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { useMutation } from "react-query";
 
-export default function SignUp () {
+export default function SignUp() {
 
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [nickname, setNickname] = useState('');
 
+    const mutation = useMutation(register, {
+        onSuccess: () => {
+            toast.success("회원가입에 성공했습니다. 로그인 해주세요.");
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || "회원가입에 실패했습니다.");
+        }
+    });
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        try {
-            const result = await register( id, password, nickname );
-            if (result.success) {
-            console.log('회원가입 성공');
-            } else {
-                console.error('회원가입 실패', result.message);
-            }
-        } catch (error) {
-            console.error('회원가입 요청 실패', error);
-        }
+        mutation.mutate({ id, password, nickname });
     }
 
     return (

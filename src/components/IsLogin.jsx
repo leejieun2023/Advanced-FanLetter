@@ -3,6 +3,8 @@ import { login } from '../api';
 import { useState } from "react";
 import { login as loginAction } from '../redux/modules/authSlice';
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { useMutation } from "react-query";
 
 export default function IsLogin({ onSignUpClick }) {
 
@@ -11,28 +13,31 @@ export default function IsLogin({ onSignUpClick }) {
 
     const dispatch = useDispatch();
 
+    const mutation = useMutation(login, {
+        onSuccess: (data) => {
+            if (data.success) {
+                const { accessToken, userId, nickname } = data;
+                dispatch(loginAction({ accessToken, userId, nickname }));
+                toast.success("로그인에 성공했습니다.");
+            }
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || "로그인에 실패했습니다.");
+        }
+    });
+
     const handleLogin = async (event) => {
         event.preventDefault();
-        try {
-            const result = await login(userId, password);
-            if (result.success) {
-                console.log('로그인 성공');
-                dispatch(loginAction());
-            } else {
-                console.error('로그인 실패', result.message);
-            }
-        } catch (error) {
-            console.error('로그인 요청 실패', error);
-        }
+        mutation.mutate({ userId, password });
     };
 
     return (
         <Container>
             <p>Login</p>
-            <LoginBox>
+            <LoginBox onSubmit={handleLogin}>
                 <input type="text" value={userId} onChange={(event) => setUserId(event.target.value)} placeholder="아이디"></input>
                 <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="비밀번호"></input>
-                <button type="submit" onClick={handleLogin}>로그인</button>
+                <button type="submit">로그인</button>
                 <button onClick={onSignUpClick}>회원가입</button>
             </LoginBox>
         </Container>

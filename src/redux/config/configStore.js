@@ -1,12 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import letters from "../modules/letterSlice";
 import auth from "../modules/authSlice";
 
+const rootReducer = combineReducers({ letters, auth });
+
 const store = configureStore({
-    reducer: {
-        letters,
-        auth,
-    },
-})
+    reducer: rootReducer,
+});
 
 export default store;
