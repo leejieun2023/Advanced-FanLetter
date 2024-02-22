@@ -1,14 +1,17 @@
 import { useState } from "react";
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addLetter } from "../redux/modules/letterSlice";
 
 export default function AddForm() {
 
     const dispatch = useDispatch();
+
+    const {avatar, nickname} = useSelector(state => state.auth)
+
     const artists = ['민지', '하니', '다니엘', '해린', '혜인'];
-    const [nickname, setNickname] = useState('');
+
     const [content, setContent] = useState('');
     const [artist, setArtist] = useState(artists[0]);
 
@@ -33,12 +36,12 @@ export default function AddForm() {
             id: uuidv4(),
             nickname,
             content,
+            avatar,
             writedTo: artist,
             createdAt: koreanDateTimeFormat.format(now)
         };
 
         dispatch(addLetter(letter));
-        setNickname('');
         setContent('');
         setArtist(artists[0]);
     };
@@ -48,14 +51,7 @@ export default function AddForm() {
             <Form onSubmit={handleSubmit}>
                 <FormONE>
                     <FormRow>
-                        <p>닉네임 : </p>
-                        <Input
-                            type="text"
-                            value={nickname}
-                            onChange={event => setNickname(event.target.value)}
-                            placeholder="최대 10자까지 작성할 수 있습니다."
-                            maxLength={10}>
-                        </Input>
+                        <p>닉네임 : {nickname}</p>
                     </FormRow>
                     <FormRow>
                         <p>ㅤ내용 : </p>

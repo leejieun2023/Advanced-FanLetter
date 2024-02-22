@@ -4,6 +4,7 @@ import AddForm from 'components/AddForm';
 import { useNavigate } from 'react-router-dom';
 import Avatar from 'components/common/Avatar'
 import { useSelector } from 'react-redux';
+import Layout from 'components/Layout';
 
 const artists = ['민지', '하니', '다니엘', '해린', '혜인'];
 
@@ -15,10 +16,8 @@ export default function Home() {
 
   return (
     <div>
-      <Tob>
-        <p>NewJeans</p>
-        <p>🤍🐇🤍🐇🤍🐇💘</p>
-      </Tob>
+      <Layout>
+      </Layout>
 
       <Header>
         NewJeans fanletter
@@ -62,14 +61,6 @@ export default function Home() {
   )
 }
 
-const Tob = styled.div`
-  background-color: rgb(0, 0, 0);
-  height: 20px;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  background-color: #003d82;
-`;
 const Header = styled.div`
   background-Image: url(/KakaoTalk_20240130_121022128.jpg);
   height: 550px;
